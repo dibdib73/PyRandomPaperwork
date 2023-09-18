@@ -27,20 +27,32 @@ def first_split(firstBreak):
 
 def add_to_db(contentAdd):
     if len(contentAdd) == 2:
-        val1 = contentAdd[0]
-        val2 = contentAdd[1]
-        today = date.today()
-        cursor.execute("INSERT INTO Scanned_paperwork (Type, Paperwork_name, Date_scanned, Link_to_paperwork)"
-                       "VALUES (val1, val2, today, firstBreak)"
+        valID          = ''
+        val1           = "'" + contentAdd[0] + "'"
+        val2           = "'" + contentAdd[1] + "'"
+        valPages       = 0
+        today          = date.today()
+        valLink        = 'CurDir() + "ContentAdd[0]" + "ContentAdd[1]" + "PDF"'
+        valNote        = "NULL"
+        valDate        = 0
+        valThisIsABill = "NULL"
+        cont1 = cursor.execute("INSERT INTO Scanned_paperwork (ID, Type, Paperwork_name, Number_of_Pages, Date_scanned, Link_to_paperwork, Notes, Date_of_paperwork, Is_This_a_Bill)"
+                       "VALUES (valID, val1, val2, valPages, today, valLink, valNote, valDate, ValThisIsABill);"
                        )
-    if len(contentAdd) == 3:
-        val1 = contentAdd[0]
-        val2 = contentAdd[1]
-        val3 = contentAdd[3]
-        today = date.today()
-        cursor.execute("INSERT INTO Scanned_paperwork (Type, Paperwork_name, Date_scanned, Link_to_paperwork, Date_of_paperwork)"
-                       "VALUES (val1, val2, today, firstBreak, val3)"
-                      )
+    elif len(contentAdd) == 3:
+        valID          = ''
+        val1           = contentAdd[0]
+        val2           = contentAdd[1]
+        valPages       = 0
+        today          = date.today()
+        valLink        = 'add'
+        valNote        = "NULL"
+        valDate        = contentAdd[2]
+        valThisIsABill = "NULL"
+        cursor.execute("INSERT INTO Scanned_paperwork (ID, Type, Paperwork_name, Number_of_Pages, Date_scanned, Link_to_paperwork, Notes, Date_of_paperwork, Is_This_a_Bill)"
+                       "VALUES (valID, val1, val2, valPages, today, valLink, valNote, valDate, ValThisIsABill);")
+    else:
+        print("Error with content length")
 
 #Get Full List
 filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
@@ -53,4 +65,3 @@ def iter_through_full_list(filesInFolder):
 
 testStripped = first_split(filesInFolder)
 testAdd = add_to_db(testStripped)
-
