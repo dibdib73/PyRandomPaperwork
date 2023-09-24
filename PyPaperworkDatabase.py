@@ -14,17 +14,26 @@ cursor = conn.cursor()
 filesInFolder = []
 firstBreak = ""
 
+#Create a list of all items in folder of items to add to database.
 def copy_file_names(folder_path):
     for fileName in os.listdir(folder_path):
         filesInFolder.append(fileName)
     return filesInFolder
 
+#Pop first item from "iter_through_full_list function" list. Use those items to add to database.
 def first_split(firstBreak):
     stripped = firstBreak.pop(0)
     stripped = stripped[0 : -4]
     stripped = stripped.split('_')
     return stripped
 
+#Iterate through full list "from copy_file_names function" split apart and add to db
+def iter_through_full_list(filesInFolder):
+    for i in filesInFolder:
+        stripped = first_split(filesInFolder)
+        print(stripped)
+
+#Add the items from "iter_through_full_list function" to database. And check for correct item names.
 def add_to_db(contentAdd):
     if len(contentAdd) == 2:
         print("Name must start with originization name, then type of paperwork,\nand end with date. Must be separated with an underscore")
@@ -43,13 +52,9 @@ def add_to_db(contentAdd):
     else:
         print("Error with content length")
 
-#Iterate through full list split apart and add to db
-def iter_through_full_list(filesInFolder):
-    for i in filesInFolder:
-        stripped = first_split(filesInFolder)
-        print(stripped)
 
-#TODO: Create a function to compare file names in MS Access and names in folder path to weed out duplicates. Give user option to save anyway.
+
+#Function creating list of items from Linked_to_paperwork items.
 def ms_file_name():
     linkList = []
     selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
@@ -60,9 +65,8 @@ def ms_file_name():
             s = i.rsplit("#")[0]
             linkList.append(s)
     return linkList
-linksToPaperwork = ms_file_name()
-print(linksToPaperwork)
-#def search_for_duplicates(folderFiles, msFiles):
+
+def search_for_duplicates(folderFiles, msFiles):
 
 #TODO: Find way to Hyperlink in SQL for link to file
 #TODO: 
@@ -72,3 +76,4 @@ print(linksToPaperwork)
 
 #FIXME: This is test for function first_split. Rename or delete.
 #testStripped = first_split(filesInFolder)
+#linksToPaperwork = ms_file_name()
