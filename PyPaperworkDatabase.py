@@ -51,8 +51,15 @@ def iter_through_full_list(filesInFolder):
 
 #TODO: Create a function to compare file names in MS Access and names in folder path to weed out duplicates. Give user option to save anyway.
 def ms_file_name():
+    linkList = []
     selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
-    return selectStmt
+    cursor.execute(selectStmt)
+    namesOfLinks = cursor.fetchall()
+    for nl in namesOfLinks:
+        for i in nl:
+            s = i.rsplit("#")[0]
+            linkList.append(s)
+    return linkList
 linksToPaperwork = ms_file_name()
 print(linksToPaperwork)
 #def search_for_duplicates(folderFiles, msFiles):
@@ -60,7 +67,8 @@ print(linksToPaperwork)
 #TODO: Find way to Hyperlink in SQL for link to file
 #TODO: 
 
-#Get Full List
+#Get Full List of names of files in NeedToAddToDatabase folder.
 #filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
 
+#FIXME: This is test for function first_split. Rename or delete.
 #testStripped = first_split(filesInFolder)
