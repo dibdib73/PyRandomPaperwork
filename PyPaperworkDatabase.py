@@ -61,10 +61,7 @@ def first_split(firstBreak):
 #Add the items from "first_split function" to database.
 #And check for correct item names.
 def add_to_db(contentAdd):
-    if len(contentAdd) < 3:
-        print("Name must start with originization name, then type of paperwork,\nand end with date. Must be separated with an underscore")
-
-    elif len(contentAdd) == 3:
+    if len(contentAdd) == 3:
         val1 = contentAdd[1]
         val2 = contentAdd[0]
         val3 = date.today()
@@ -74,9 +71,8 @@ def add_to_db(contentAdd):
                 "VALUES (?, ?, ?);")
         cursor.execute(exeStatment, testVals)
         cursor.commit()
-
     else:
-        print("Error with content length")
+        print("Name must start with originization name, then type of paperwork,\nand end with date. Must be separated with an underscore")
 
 filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
 msFiles       = ms_file_name()
