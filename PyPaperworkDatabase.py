@@ -12,7 +12,6 @@ cursor = conn.cursor()
 
 '''Modification of database'''
 filesInFolder  = []
-iteredFullList = []
 firstBreak     = ""
 
 #List of all items in folder of items to add to database.
@@ -79,10 +78,6 @@ def add_to_db(contentAdd):
     else:
         print("Error with content length")
 
-#TODO: Find way to Hyperlink in SQL for link to file
-#TODO: 
-
-#Get Full List of names of files in NeedToAddToDatabase folder.
 filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
 msFiles       = ms_file_name()
 listWODups    = search_for_duplicates(filesInFolder, msFiles)
