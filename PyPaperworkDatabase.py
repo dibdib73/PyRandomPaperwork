@@ -7,12 +7,10 @@ from datetime import date
 connStr = (r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
             r'DBQ=F:\ScannedRandomPaperwork\A_ScannedPaperworkInThisFile.accdb;')
 conn = pyodbc.connect(connStr)
-# Execute a SELECT statement
 cursor = conn.cursor()
 
 '''Modification of database'''
 filesInFolder  = []
-firstBreak     = ""
 
 #List of all items in folder of items to add to database.
 def copy_file_names(folder_path):
@@ -58,8 +56,8 @@ def first_split(firstBreak):
     stripped = stripped.split('_')
     return stripped
 
-#Add the items from "first_split function" to database.
-#And check for correct item names.
+#Add the items from "iter_through_full_list function" to database.
+#And check for correct amount of items.
 def add_to_db(contentAdd):
     if len(contentAdd) == 3:
         val1 = contentAdd[1]
