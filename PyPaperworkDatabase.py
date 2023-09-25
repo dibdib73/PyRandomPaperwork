@@ -81,5 +81,4 @@ def add_to_db(contentAdd):
 filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
 msFiles       = ms_file_name()
 listWODups    = search_for_duplicates(filesInFolder, msFiles)
-print(listWODups)
 iterFullList  = iter_through_full_list(listWODups)
