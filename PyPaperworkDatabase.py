@@ -11,8 +11,9 @@ conn = pyodbc.connect(connStr)
 cursor = conn.cursor()
 
 '''Modification of database'''
-filesInFolder = []
-firstBreak = ""
+filesInFolder  = []
+iteredFullList = []
+firstBreak     = ""
 
 #List of all items in folder of items to add to database.
 def copy_file_names(folder_path):
@@ -20,11 +21,34 @@ def copy_file_names(folder_path):
         filesInFolder.append(fileName)
     return filesInFolder
 
-#Iterate through full list from "copy_file_names function" split apart into separate list.
+#Function creating list of items from Linked_to_paperwork items.
+#Return a new list of items from the tupels inside of the list. Easier to deal with later.
+def ms_file_name():
+    linkList = []
+    selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
+    cursor.execute(selectStmt)
+    namesOfLinks = cursor.fetchall()
+    for nl in namesOfLinks:
+        for i in nl:
+            s = i.rsplit("#")[0]
+            linkList.append(s)
+    return linkList
+
+#Convert the results from "iter_through_full_list function" and "ms_file_name function" to sets
+def search_for_duplicates(folderFiles, msFiles):
+    setFolderFiles = set(folderFiles)
+    setMsFiles     = set(msFiles)
+    diffItems = setFolderFiles.difference(setMsFiles)
+    diffItems = list(diffItems)
+    return diffItems
+
+#Iterate through full list from "search_for_duplicates function".
+#stripped is calling "first_split function".
+#Add stripped list to database using "add_to_db function".
 def iter_through_full_list(filesInFolder):
-    for i in filesInFolder:
+    while 0 < len(filesInFolder):
         stripped = first_split(filesInFolder)
-        print(stripped)
+        add_to_db(stripped)
 
 #Pop first item from "iter_through_full_list function" list.
 #Strip the .pdf off the end.
@@ -55,28 +79,12 @@ def add_to_db(contentAdd):
     else:
         print("Error with content length")
 
-#Function creating list of items from Linked_to_paperwork items.
-#Return a new list of items from the tupels inside of the list. Easier to deal with later.
-def ms_file_name():
-    linkList = []
-    selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
-    cursor.execute(selectStmt)
-    namesOfLinks = cursor.fetchall()
-    for nl in namesOfLinks:
-        for i in nl:
-            s = i.rsplit("#")[0]
-            linkList.append(s)
-    return linkList
-
-def search_for_duplicates(folderFiles, msFiles):
-
 #TODO: Find way to Hyperlink in SQL for link to file
 #TODO: 
 
-
 #Get Full List of names of files in NeedToAddToDatabase folder.
-#filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
-
-#FIXME: This is test for function first_split. Rename or delete.
-#testStripped = first_split(filesInFolder)
-#linksToPaperwork = ms_file_name()
+filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
+msFiles       = ms_file_name()
+listWODups    = search_for_duplicates(filesInFolder, msFiles)
+print(listWODups)
+iterFullList  = iter_through_full_list(listWODups)
