@@ -2,6 +2,7 @@
 import os
 import pyodbc
 from datetime import date
+from datetime import datetime
 
 '''Starting with connection to database using pyodbc. Then modifiing the database.'''
 connStr = (r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
@@ -66,15 +67,17 @@ def add_to_db(contentAdd):
         val3 = date.today()
         val4 = contentAdd[2]
         valDate = val3.strftime('%m/%d/%y')
-        testVals = (val1, val2, valDate, val4)
+        val4Date = datetime.strptime(val4, '%m%d%y')
+        Vals = (val1, val2, valDate, val4Date)
         exeStatment = ("INSERT INTO Scanned_paperwork (Type, Paperwork_name, Date_scanned, Date_of_paperwork)"
                 "VALUES (?, ?, ?, ?);")
-        cursor.execute(exeStatment, testVals)
+        cursor.execute(exeStatment, Vals)
         cursor.commit()
     else:
         print("Name must start with originization name, then type of paperwork,\nand end with date. Must be separated with an underscore")
 
 filesInFolder = copy_file_names(r"F:\ScannedRandomPaperwork\NeedToAddToDatabase")
+print(filesInFolder)
 msFiles       = ms_file_name()
 listWODups    = search_for_duplicates(filesInFolder, msFiles)
 iterFullList  = iter_through_full_list(listWODups)
