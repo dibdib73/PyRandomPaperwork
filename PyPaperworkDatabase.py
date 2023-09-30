@@ -7,8 +7,8 @@ from datetime import datetime
 '''Starting with connection to database using pyodbc. Then modifiing the database.'''
 connStr = (r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
             r'DBQ=F:\ScannedRandomPaperwork\A_ScannedPaperworkInThisFile.accdb;')
-conn = pyodbc.connect(connStr)
-cursor = conn.cursor()
+conn    = pyodbc.connect(connStr)
+cursor  = conn.cursor()
 
 '''Modification of database'''
 filesInFolder  = []
