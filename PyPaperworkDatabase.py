@@ -58,15 +58,17 @@ def first_split(firstBreak):
 
 #Add the items from "iter_through_full_list function" to database.
 #And check for correct amount of items.
+#TODO:Add another spot for "Date_of_paperwork"
 def add_to_db(contentAdd):
     if len(contentAdd) == 3:
         val1 = contentAdd[1]
         val2 = contentAdd[0]
         val3 = date.today()
+        val4 = contentAdd[2]
         valDate = val3.strftime('%m/%d/%y')
-        testVals = (val1, val2, valDate)
-        exeStatment = ("INSERT INTO Scanned_paperwork (Type, Paperwork_name, Date_scanned)"
-                "VALUES (?, ?, ?);")
+        testVals = (val1, val2, valDate, val4)
+        exeStatment = ("INSERT INTO Scanned_paperwork (Type, Paperwork_name, Date_scanned, Date_of_paperwork)"
+                "VALUES (?, ?, ?, ?);")
         cursor.execute(exeStatment, testVals)
         cursor.commit()
     else:
