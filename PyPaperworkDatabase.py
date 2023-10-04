@@ -5,6 +5,7 @@ from datetime import date
 from datetime import datetime
 
 '''Starting with connection to database using pyodbc. Then modifiing the database.'''
+#TODO:Ask user for location of Database and folder of paperwork to scan.
 connStr = (r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
             r'DBQ=F:\ScannedRandomPaperwork\A_ScannedPaperworkInThisFile.accdb;')
 conn    = pyodbc.connect(connStr)
@@ -14,6 +15,7 @@ cursor  = conn.cursor()
 filesInFolder  = []
 
 #List of all items in folder of items to add to database.
+#TODO:Type the args. Ensuring what kind of type the return is.
 def copy_file_names(folder_path):
     for fileName in os.listdir(folder_path):
         filesInFolder.append(fileName)
