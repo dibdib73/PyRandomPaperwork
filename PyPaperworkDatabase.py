@@ -16,14 +16,14 @@ filesInFolder  = []
 
 #List of all items in folder of items to add to database.
 #TODO:Type the args. Ensuring what kind of type the return is.
-def copy_file_names(folder_path):
+def copy_file_names(folder_path) -> list:
     for fileName in os.listdir(folder_path):
         filesInFolder.append(fileName)
     return filesInFolder
 
 #Function creating list of items from Linked_to_paperwork items.
 #Return a new list of items from the tupels inside of the list. Easier to deal with later.
-def ms_file_name():
+def ms_file_name() -> list:
     linkList   = []
     selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
     cursor.execute(selectStmt)
@@ -35,7 +35,7 @@ def ms_file_name():
     return linkList
 
 #Convert the results from "iter_through_full_list function" and "ms_file_name function" to sets
-def search_for_duplicates(folderFiles, msFiles):
+def search_for_duplicates(folderFiles, msFiles) -> list:
     setFolderFiles = set(folderFiles)
     setMsFiles     = set(msFiles)
     diffItems      = setFolderFiles.difference(setMsFiles)
@@ -53,7 +53,7 @@ def iter_through_full_list(filesInFolder):
 #Pop first item from "iter_through_full_list function" list.
 #Strip the .pdf off the end.
 #Create a new list of items by separating text by using underscore as a marker.
-def first_split(firstBreak):
+def first_split(firstBreak) -> list:
     stripped = firstBreak.pop(0)
     stripped = stripped[0 : -4]
     stripped = stripped.split('_')
