@@ -3,6 +3,7 @@ import os
 import pyodbc
 from datetime import date
 from datetime import datetime
+from typing import List, Set
 
 '''Starting with connection to database using pyodbc. Then modifiing the database.'''
 #TODO:Ask user for location of Database and folder of paperwork to scan.
@@ -12,18 +13,17 @@ conn    = pyodbc.connect(connStr)
 cursor  = conn.cursor()
 
 '''Modification of database'''
-filesInFolder  = []
+filesInFolder: List[str]  = []
 
 #List of all items in folder of items to add to database.
-#TODO:Type the args. Ensuring what kind of type the return is.
-def copy_file_names(folder_path) -> list:
+def copy_file_names(folder_path: str) -> List[str]:
     for fileName in os.listdir(folder_path):
         filesInFolder.append(fileName)
     return filesInFolder
 
 #Function creating list of items from Linked_to_paperwork items.
 #Return a new list of items from the tupels inside of the list. Easier to deal with later.
-def ms_file_name() -> list:
+def ms_file_name() -> List[str]:
     linkList   = []
     selectStmt = "SELECT Link_to_paperwork FROM Scanned_paperwork"
     cursor.execute(selectStmt)
@@ -35,7 +35,7 @@ def ms_file_name() -> list:
     return linkList
 
 #Convert the results from "iter_through_full_list function" and "ms_file_name function" to sets
-def search_for_duplicates(folderFiles, msFiles) -> list:
+def search_for_duplicates(folderFiles: List[str], msFiles: Set[str]) -> List[str]:
     setFolderFiles = set(folderFiles)
     setMsFiles     = set(msFiles)
     diffItems      = setFolderFiles.difference(setMsFiles)
