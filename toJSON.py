@@ -7,11 +7,6 @@ import os
 #TODO: If there is a JSON file iterate through location in file (numbered)
 #TODO: Ask user what file location is to be worked on
 
-fileN = r'Fidelity_Retirement_0701202.pdf'
-#input("What is the database name? ")
-wherefile = r'F:\ScannedRandomPaperwork\NeedToAddToDatabase'
-#input("Where is the file location? ")
-
 def look_for_json(fileN: str, wherefile: str) -> str:
     wherefile = wherefile + '.json'
     wherePath = os.listdir(wherefile)
@@ -30,13 +25,19 @@ def look_for_json(fileN: str, wherefile: str) -> str:
 
 def create_json(jsonName: str, jsonLoc: str ) -> str:
     jsonPath = os.path.join(jsonLoc, jsonName)
+    return jsonPath
 
-
-dbFile = look_for_json(fileN, wherefile)
-"""class json_read_write(self, jsonName, jsonLocation):
-     jsonName = self.jsonName
-    jsonLocation = self.jsonLocation
+class json_read_write(self, jsonName, jsonLoc):
+    jsonName = self.jsonName
+    jsonLoc = self.jsonLoc
     def write_to_json(self):
-        return None
+        with open(self.jsonName, 'w+') as writeJson:
+            dbname = {'Name': self.jsonName, "Directory": self.jsonLoc}
+            writeJson.write(dbname)
     def read_json_file(self):
-        return None """
+        with open(self.jsonName, 'r') as readJson:
+            listDbs = readJson.readlines()
+
+wherefile = r'F:\ScannedRandomPaperwork\NeedToAddToDatabase'
+fileN = r'Fidelity_Retirement_0701202.pdf'
+dbFile = look_for_json(fileN, wherefile)
